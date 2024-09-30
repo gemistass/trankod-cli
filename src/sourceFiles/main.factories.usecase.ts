@@ -1,0 +1,101 @@
+import ts, { ListFormat, NodeArray, factory } from 'typescript';
+import { printNode, printNodeArray } from '../utils/printer';
+
+const PATH = 'generatedFiles';
+export function generateMainImplFactory(name: string) {
+    const root =[
+      factory.createImportDeclaration(
+        undefined,
+        factory.createImportClause(
+          false,
+          undefined,
+          factory.createNamedImports([factory.createImportSpecifier(
+            false,
+            undefined,
+            factory.createIdentifier("UsecaseImpl")
+          )])
+        ),
+        factory.createStringLiteral("@/data/usecases"),
+        undefined
+      ),
+      factory.createImportDeclaration(
+        undefined,
+        factory.createImportClause(
+          false,
+          undefined,
+          factory.createNamedImports([factory.createImportSpecifier(
+            false,
+            undefined,
+            factory.createIdentifier("Usecase")
+          )])
+        ),
+        factory.createStringLiteral("@/domain/usecases"),
+        undefined
+      ),
+      factory.createImportDeclaration(
+        undefined,
+        factory.createImportClause(
+          false,
+          undefined,
+          factory.createNamedImports([factory.createImportSpecifier(
+            false,
+            undefined,
+            factory.createIdentifier("Repository")
+          )])
+        ),
+        factory.createStringLiteral("@/infra/db/dynamo"),
+        undefined
+      ),
+      factory.createVariableStatement(
+        [factory.createToken(ts.SyntaxKind.ExportKeyword)],
+        factory.createVariableDeclarationList(
+          [factory.createVariableDeclaration(
+            factory.createIdentifier("makeUsecaseImpl"),
+            undefined,
+            undefined,
+            factory.createArrowFunction(
+              undefined,
+              undefined,
+              [],
+              factory.createTypeReferenceNode(
+                factory.createIdentifier("Usecase"),
+                undefined
+              ),
+              factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+              factory.createBlock(
+                [
+                  factory.createVariableStatement(
+                    undefined,
+                    factory.createVariableDeclarationList(
+                      [factory.createVariableDeclaration(
+                        factory.createIdentifier("usecaseRepository"),
+                        undefined,
+                        undefined,
+                        factory.createNewExpression(
+                          factory.createIdentifier("Repository"),
+                          undefined,
+                          []
+                        )
+                      )],
+                      ts.NodeFlags.Const 
+                    )
+                  ),
+                  factory.createReturnStatement(factory.createNewExpression(
+                    factory.createIdentifier("UsecaseImpl"),
+                    undefined,
+                    [factory.createIdentifier("usecaseRepository")]
+                  ))
+                ],
+                true
+              )
+            )
+          )],
+          ts.NodeFlags.Const 
+        )
+      )
+    ];
+    ;
+    
+
+    return printNodeArray(root, name + 'Factory', PATH);
+}

@@ -1,0 +1,28 @@
+{
+    "name": "directory_manager",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "bin": {
+        "dirmanager": "./dist/index.js"
+    },
+    "scripts": {
+        "build": "npx tsc",
+        "trankod": "ts-node src/bin/trankod.ts",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "commander": "^11.0.0",
+        "figlet": "^1.6.0"
+    },
+    "devDependencies": {
+        "@commander-js/extra-typings": "^11.0.0",
+        "@types/figlet": "^1.5.6",
+        "@types/node": "^20.5.3",
+        "typescript": "^5.1.6",
+        "yaml": "^2.4.1"
+    }
+}
